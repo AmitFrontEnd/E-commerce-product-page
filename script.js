@@ -69,12 +69,12 @@ decrement.addEventListener("click", () => {
 
 let cartImage = "images/image-product-1-thumbnail.jpg";
 
-const removeProduct=()=>{
-    counter=0;
-    countElement.innerText=0;
-    rateElement.innerText=`$0.00`;
-    actualAmount.innerText=`$0.00`;
-    cartTotalElement.innerText=0;
+const removeProduct = () => {
+    counter = 0;
+    countElement.innerText = 0;
+    rateElement.innerText = `$0.00`;
+    actualAmount.innerText = `$0.00`;
+    cartTotalElement.innerText = 0;
     empty.style.display = "flex";
     cartItem.style.display = "none";
 }
@@ -94,7 +94,7 @@ addToCart.addEventListener("click", () => {
     </div>
     <img src="images/icon-delete.svg" class="delete-item">`;
     const deleteProduct = document.querySelector(".delete-item");
-    deleteProduct.addEventListener('click',removeProduct)
+    deleteProduct.addEventListener('click', removeProduct)
 
 });
 
@@ -124,5 +124,46 @@ mainImages.forEach((images) => {
         cartContainer.classList.remove('active')
         imageGallery.style.display = "flex";
         document.querySelector(".gallery-main-image").src = `${e.target.src}`;
+    });
+});
+
+
+const galleryThumbnail = document.querySelectorAll('.image-gallery .thumb-image')
+
+let sliderImageCounter = 1;
+const totalImages = 4;
+
+const nextBtn = document.querySelector('.next-btn');
+const prevBtn = document.querySelector('.prev-btn');
+const galleryMainImage = document.querySelector(".gallery-main-image");
+
+nextBtn.addEventListener('click', () => {
+    if (sliderImageCounter >= totalImages) {
+        sliderImageCounter = 1;
+    } else {
+        sliderImageCounter++;
+    }
+    galleryMainImage.src = `images/image-product-${sliderImageCounter}.jpg`;
+});
+
+prevBtn.addEventListener('click', () => {
+    if (sliderImageCounter <= 1) {
+        sliderImageCounter = totalImages;
+    } else {
+        sliderImageCounter--;
+    }
+    galleryMainImage.src = `images/image-product-${sliderImageCounter}.jpg`;
+});
+
+const galleryThumbnails = document.querySelectorAll('.thumb-image')
+
+galleryThumbnails.forEach((thumb, index) => {
+    thumb.addEventListener("click", () => {
+
+        galleryThumbnails.forEach((t) => t.classList.remove("active"));
+
+        thumb.classList.add("active");
+
+        galleryMainImage.src = mainImages[index].src;
     });
 });

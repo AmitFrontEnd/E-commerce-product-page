@@ -410,6 +410,13 @@ button {
   display: block;
 }
 
+.next-btn,.prev-btn{
+  cursor: pointer;
+}
+
+.thumbnail-container img{
+  cursor: pointer;
+}
 
 
 
