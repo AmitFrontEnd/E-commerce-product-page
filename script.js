@@ -16,6 +16,7 @@ const productImage = document.querySelector(".product-image");
 const imageGallery = document.querySelector(".image-gallery");
 const wrapper = document.querySelector(".wrapper");
 const closeGallery = document.querySelector(".close-gallery");
+const cartButton=document.querySelector('.cart-container button')
 let discountedPrice = null;
 
 let counter = 0;
@@ -35,10 +36,10 @@ increment.addEventListener("click", () => {
     cartContainer.classList.remove("active");
     counter++;
     countElement.textContent = counter;
+    
 
     if (counter > 0) {
         let price = 80;
-
         actualAmount.innerText = "$" + (price * counter).toFixed(2);
         discountedPrice = (
             parseFloat(actualAmount.innerText.replace("$", "")) * 0.5
@@ -62,6 +63,7 @@ decrement.addEventListener("click", () => {
     if (counter === 0) {
         cartTotalElement.style.display = "none";
         empty.style.display = "block";
+         cartButton.style.display='none'
         cartItem.style.display = "none";
         rateElement.innerText = "$" + (0).toFixed(2);
     }
@@ -69,15 +71,7 @@ decrement.addEventListener("click", () => {
 
 let cartImage = "images/image-product-1-thumbnail.jpg";
 
-const removeProduct = () => {
-    counter = 0;
-    countElement.innerText = 0;
-    rateElement.innerText = `$0.00`;
-    actualAmount.innerText = `$0.00`;
-    cartTotalElement.innerText = 0;
-    empty.style.display = "flex";
-    cartItem.style.display = "none";
-}
+
 
 addToCart.addEventListener("click", () => {
     empty.style.display = "none";
@@ -93,10 +87,24 @@ addToCart.addEventListener("click", () => {
      ${discountedPrice ? `<span class="total-item-price">${discountedPrice}</span>` : ''}
     </div>
     <img src="images/icon-delete.svg" class="delete-item">`;
+    cartButton.style.display='block'
+
     const deleteProduct = document.querySelector(".delete-item");
     deleteProduct.addEventListener('click', removeProduct)
 
 });
+const removeProduct = () => {
+    counter = 0;
+    discountedPrice = 0; 
+    countElement.innerText = 0;
+    rateElement.innerText = `$0.00`; 
+    actualAmount.innerText = `$0.00`;
+    cartTotalElement.innerText = 0;
+    empty.style.display = "flex";
+    cartItem.style.display = "none";
+    cartButton.style.display = 'none';
+};
+
 
 const productSection = document.querySelector(".product-section");
 const thumbnails = productSection.querySelectorAll(".thumbnail-container img");
@@ -166,4 +174,34 @@ galleryThumbnails.forEach((thumb, index) => {
 
         galleryMainImage.src = mainImages[index].src;
     });
+});
+
+const productPrevbtn = document.querySelector('.pr-prev-btn')
+const productNextbtn = document.querySelector('.pr-next-btn')
+productNextbtn.addEventListener('click', () => {
+    mainImages.forEach((img) => img.removeAttribute('id'));
+
+    if (sliderImageCounter >= totalImages) {
+        sliderImageCounter = 1;
+    } else {
+        sliderImageCounter++;
+    }
+
+    mainImages[sliderImageCounter - 1].setAttribute('id', 'show-img');
+    cartImage = mainImages[sliderImageCounter - 1].src;
+
+});
+
+productPrevbtn.addEventListener('click', () => {
+    mainImages.forEach((img) => img.removeAttribute('id'));
+
+    if (sliderImageCounter <= 1) {
+        sliderImageCounter = totalImages;
+    } else {
+        sliderImageCounter--;
+    }
+
+    mainImages[sliderImageCounter - 1].setAttribute('id', 'show-img');
+    cartImage = mainImages[sliderImageCounter - 1].src;
+
 });

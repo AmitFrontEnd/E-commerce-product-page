@@ -544,3 +544,10 @@ button {
     opacity: 1;
   }
 }
+
+
+@media (max-width: 350px) {
+  .cart-container {
+      width: 320px;
+  }
+}
