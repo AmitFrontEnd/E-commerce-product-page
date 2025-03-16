@@ -427,7 +427,7 @@ button {
 @media (max-width: 768px) {
   nav {
     transform: translateX(-45vw);
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     background-color: white;
